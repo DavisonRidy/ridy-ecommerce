@@ -28,8 +28,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('eco_login');
         }else{
             $role = $this->getUser()->getRoles();
-            if($role[0] != "ROLE_ADMIN"){
-                $this->addFlash("danger", "Vous devriez vous connecter en tant qu'admin!");
+            if($role[0] == "ROLE_USER"){
+                $this->addFlash("danger", "Vous devriez vous connecter en tant que personnel!");
                 return $this->redirectToRoute('eco_home');
             }
         }
@@ -130,8 +130,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('eco_login');
         }else{
             $role = $this->getUser()->getRoles();
-            if($role[0] != "ROLE_ADMIN"){
-                $this->addFlash("danger", "Vous devriez vous connecter en tant qu'admin!");
+            if($role[0] == "ROLE_USER"){
+                $this->addFlash("danger", "Vous devriez vous connecter en tant que personnel!");
                 return $this->redirectToRoute('eco_home');
             }
         }
@@ -153,8 +153,8 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('eco_login');
         }else{
             $role = $this->getUser()->getRoles();
-            if($role[0] != "ROLE_ADMIN"){
-                $this->addFlash("danger", "Vous devriez vous connecter en tant qu'admin!");
+            if($role[0] == "ROLE_USER"){
+                $this->addFlash("danger", "Vous devriez vous connecter en tant que personnel!");
                 return $this->redirectToRoute('eco_home');
             }
         }

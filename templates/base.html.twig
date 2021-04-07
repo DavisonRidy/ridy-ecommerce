@@ -23,8 +23,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('eco_produit') }}">Produits</a>
                     </li>
-                    {% set rl = "ROLE_ADMIN" %}
-                    {% if app.user and app.user.roles[0] == rl %}
+                    {% set rl = "ROLE_USER" %}
+                    {% if app.user and app.user.roles[0] != rl %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Nouveau
