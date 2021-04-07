@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~" Liste des commandes" %}
+{% block body %}
+
+<h1>Liste des commandes</h1>
+<div class="row">
+    <div class="col-md-9 mx-auto">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Adress</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                        <td>{{ commande.nom }}</td>
+                        <td>{{ commande.prenom }}</td>
+                        <td>{{ commande.address }}</td>
+                        <td>
+                            <a href="{{ path('eco_commande_detail', {'id': commande.id }) }}" class="btn btn-primary">Détail</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="w-100">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if pg == 1 %}disabled{% endif %}">
+                        <a class="page-link" href="{{path('eco_commande_list', {'pg': pg - 1})}}">
+                            Pré...
+                        </a>
+                    </li>        
+                    {% for i in 1 .. pgs %}
+                        <li class="page-item {% if pg == i %}active{% endif %}"><a class="page-link"
+                            href="{{path('eco_commande_list', {'pg': i})}}">
+                                {{i}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item {% if pg == pgs %}disabled{% endif %}">
+                        <a class="page-link" href="{{path('eco_commande_list', {'pg': pg + 1})}}">
+                            Sui...
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+    
+{% endblock %}

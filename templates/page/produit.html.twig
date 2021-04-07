@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Produit" %}
+
+{% block body %}
+    <h1>Tous les produits dispo</h1>
+    <div class="proList">
+        <h3>Ordinateurs portable</h3>
+        <hr>
+        <div class="bg-light mb-5">
+            <div class="row mx-2">
+            {% for pc in pcs %}
+                <div class="p-0 m-1 border rounded text-center pro" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(pc) }}" class="w-100" alt="Image du {{pc.nom}}">
+                    <h4 class="my-3">{{ pc.nom |capitalize }}</h4>
+                    <p class="my-4"><span class="text-info prix">{{ pc.prix }} AR</span></p>
+                    <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': pc.type.id ,'id': pc.id}) }}">Voir en détail</a>
+                </div>
+            {% endfor %}
+            {% if pcs != null %}
+                <div class="p-0 m-1 border rounded text-center pro Plus" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(pcs[0]) }}" class="w-100" alt="Image du {{pcs[0].nom}}">
+                    <h4 class="my-3">{{ pcs[0].nom |capitalize }}</h4>
+                    <div class="PlusB">  
+                        <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': pcs[0].type.id ,'id': pcs[0].id}) }}">Plus de {{pcs[0].type.genre}}s</a>
+                    </div>
+                    <p class="my-4"><span class="text-info prix">{{ pcs[0].prix }} AR</span></p>
+                    <a class="btn btn-info">Voir en détail</a>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="proList">
+        <h3>Smartphones</h3>
+        <hr>
+        <div class="bg-light mb-5">
+            <div class="row mx-2">
+            {% for produit in phones %}
+                <div class="p-0 m-1 border rounded text-center pro" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(produit) }}" class="w-100" alt="Image du {{produit.nom}}">
+                    <h4 class="my-3">{{ produit.nom |capitalize }}</h4>
+                    <p class="my-4"><span class="text-info prix">{{ produit.prix }} AR</span></p>
+                    <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': produit.type.id, 'id': produit.id}) }}">Voir en détail</a>
+                </div>
+            {% endfor %}
+            {% if phones != null %}
+                <div class="p-0 m-1 border rounded text-center pro Plus" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(phones[0]) }}" class="w-100" alt="Image du {{phones[0].nom}}">
+                    <h4 class="my-3">{{ phones[0].nom |capitalize }}</h4>
+                    <div class="PlusB">  
+                        <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': phones[0].type.id ,'id': phones[0].id}) }}">Plus de {{phones[0].type.genre}}s</a>
+                    </div>
+                    <p class="my-4"><span class="text-info prix">{{ phones[0].prix }} AR</span></p>
+                    <a class="btn btn-info">Voir en détail</a>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+     <div class="proList">
+        <h3>Tablettes</h3>
+        <hr>
+        <div class="bg-light mb-5">
+            <div class="row mx-2">
+            {% for produit in tablettes %}
+                <div class="p-0 m-1 border rounded text-center pro" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(produit) }}" class="w-100" alt="Image du {{produit.nom}}">
+                    <h4 class="my-3">{{ produit.nom |capitalize }}</h4>
+                    <p class="my-4"><span class="text-info prix">{{ produit.prix }} AR</span></p>
+                    <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': produit.type.id, 'id': produit.id}) }}">Voir en détail</a>
+                </div>
+            {% endfor %}
+            {% if tablettes != null %}
+                <div class="p-0 m-1 border rounded text-center pro Plus" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(tablettes[0]) }}" class="w-100" alt="Image du {{tablettes[0].nom}}">
+                    <h4 class="my-3">{{ tablettes[0].nom |capitalize }}</h4>
+                    <div class="PlusB">  
+                        <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': tablettes[0].type.id ,'id': tablettes[0].id}) }}">Plus de {{tablettes[0].type.genre}}s</a>
+                    </div>
+                    <p class="my-4"><span class="text-info prix">{{ tablettes[0].prix }} AR</span></p>
+                    <a class="btn btn-info">Voir en détail</a>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="proList">
+        <h3>Accessoires</h3>
+        <hr>
+        <div class="bg-light mb-5">
+            <div class="row mx-2">
+            {% for produit in accessoires %}
+                <div class="p-0 m-1 border rounded text-center pro" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(produit) }}" class="w-100" alt="Image du {{produit.nom}}">
+                    <h4 class="my-3">{{ produit.nom |capitalize }}</h4>
+                    <p class="my-4"><span class="text-info prix">{{ produit.prix }} AR</span></p>
+                    <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': produit.type.id, 'id': produit.id}) }}">Voir en détail</a>
+                </div>
+            {% endfor %}
+            {% if accessoires != null %}
+                <div class="p-0 m-1 border rounded text-center pro Plus" style="width: 19rem">
+                    <span class="border-dark bg-primary new">new</span>
+                    <img src="{{ vich_uploader_asset(accessoires[0]) }}" class="w-100" alt="Image du {{accessoires[0].nom}}">
+                    <h4 class="my-3">{{ accessoires[0].nom |capitalize }}</h4>
+                    <div class="PlusB">  
+                        <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': accessoires[0].type.id ,'id': accessoires[0].id}) }}">Plus de {{accessoires[0].type.genre}}s</a>
+                    </div>
+                    <p class="my-4"><span class="text-info prix">{{ accessoires[0].prix }} AR</span></p>
+                    <a class="btn btn-info">Voir en détail</a>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

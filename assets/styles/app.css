@@ -1,0 +1,52 @@
+@import "~bootstrap";
+
+body {
+    background-color: initial;
+}
+footer{
+    line-height: 0px;
+}
+h1{
+    margin: 25px 0px;
+    text-align: center;
+}
+button a{
+    color: white;
+}
+.pro .new{
+    position: absolute;
+    margin: 15px;
+    padding: 3px 15px;
+    font-size: 18px;
+    color: white;
+    border-radius: 20px 20px 0px 20px;
+}
+.pro h4{
+    font-family: sans-serif;
+}
+.prix{
+    font-size: 30px;
+    font-weight: bold;
+}
+.Plus{
+    opacity: 0.5;
+}
+.PlusB{
+    position: absolute;
+    margin-left: 95px;
+    display: none;
+}
+.contact{
+    color: green;
+    font-weight: bold;
+    font-size: 20px;
+    word-spacing: -5px;
+    font-family: serif;
+}
+.recap{
+    float: right;
+}
+.recapS{
+    font-family: Georgia;
+}
+

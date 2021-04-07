@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Accueil" %}
+
+{% block body %}
+<div class="container">
+    <h1>Bienvenue sur E-commerce!</h1>
+
+    <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero hic tenetur laborum? Odit debitis quis doloribus veritatis, perspiciatis enim in sit aliquam nisi vero distinctio veniam eligendi commodi inventore beatae hic eaque repellat quos aperiam soluta quam sint officia illum atque. Recusandae perspiciatis eos iure fugit deserunt culpa dolore similique possimus cupiditate consequatur. Sunt voluptas, voluptate quidem totam doloribus, eius officia nihil dolores eveniet ratione quasi cum assumenda modi minima quos in, ipsam iure? Ea, id fugit? Quis neque ipsa reprehenderit accusamus voluptates id libero ut ullam natus officiis! Ipsam saepe modi corrupti expedita, aliquam repellat incidunt voluptas nulla in.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique soluta, repudiandae aperiam laudantium quia labore!</p>
+        <p>Sequi labore doloribus odit rem? Ab magnam quisquam magni veniam doloremque eius ratione in. Quam?</p>
+        <p>Sapiente assumenda soluta eaque ipsa animi. Hic soluta rem cum nulla repudiandae unde placeat iste!</p>
+    </div>
+</div>
+<section>
+    <div class="listUser">
+        <div class="container text-center">
+            <h3>Les membres de l'équipe</h3>
+            <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea quas soluta odio aperiam, provident natus cupiditate eaque veritatis necessitatibus, unde expedita illum pariatur minus illo maiores nisi laboriosam at recusandae fuga tenetur odit? Ut praesentium iure quam similique, voluptate hic nemo debitis harum ipsam cum quidem doloremque, error esse.</p> 
+            <div class="m-3 row">
+                {% for user in users %}
+                <div class="col-md-4">
+                    <img src="" alt="photo de nom">
+                    <h4>nom du membre</h4>
+                    <p>{{user.roles[0]}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

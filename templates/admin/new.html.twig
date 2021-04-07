@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Nouveau" %}
+
+{% block body %}
+<div class="container">
+    <h1>Nouveau produit</h1>
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            {{ form_start(form) }}
+                {{ form_row(form.nom, { 'attr': {'placeholder': 'Nom du produit' }}) }}
+                <div class="d-flex">
+                    <div class="w-50">{{ form_row(form.type) }}</div>
+                    <div class="w-50">{{ form_row(form.stock, { 'attr': {'placeholder': 'Nombre en stock du produit' }}) }}</div>
+                </div>
+                <div class="d-flex">
+                    <div class="w-50">{{ form_row(form.prixInitial, { 'attr': {'placeholder': 'Prix initial du produit' }}) }}</div>
+                    <div class="w-50">{{ form_row(form.prix, { 'attr': {'placeholder': 'Prix du produit' }}) }}</div>
+                </div>
+                {{ form_row(form.imageFile) }}
+                {{ form_row(form.description, { 'attr': {'placeholder': 'Descripion du produit' }}) }}              
+                <button type="submit" class="btn btn-success btn-lg btn-block">
+                    {% if mode %}
+                        mettre à jour
+                    {% else %}
+                        ajouter
+                    {% endif %}
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

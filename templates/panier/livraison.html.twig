@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Panier" %}
+
+{% block body %}
+<div class="container">
+    <h1>Choisir votre mode de livraison!</h1>
+        <div class="row">
+            <div class="p-2 col-md-6">
+                <div class="card">
+                    <div class="card-header  bg-secondary">
+                        <h4 class="text-uppercase text-center">Choix de livraison</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="p-2 border bg-ligth">
+                                    <select name="livr" id="livr">
+                                        <option value=2>livraison express</option>
+                                        <option value=1 selected>livraison normal</option>
+                                        <option value=3>livraison en province</option>
+                                    </select>
+                                </div>
+                                <div >
+                                    <p><strong class="text-uppercase">livraison <span id="l-c">{{livraison.choix }}</span></strong><br>prix: <strong><span id="l-p">{{ livraison.prix }}</span> AR</strong></p>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <p><strong>livraison <span id="l-c">{{livraison.choix }}</span>:</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque voluptatibus cumque alias nulla. Soluta delectus animi quia id quisquam omnis optio laboriosam voluptates eius. Explicabo rem provident fugiat quibusdam porro?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="p-2 col-md-6">
+                <div class="card bg-ligth">
+                    <div class="card-body">
+                        <p class="pr-4">Montant total des articles: <strong class="recap">{{total}} AR</strong></p>
+                        <p class="pr-4">
+                            Participation forfaitaire aux frais de traitement: <strong class="recap"><span id="l-p">{{ livraison.prix }}</span>  AR</strong><br>
+                            <span class="text-muted recapS">(Avec une livraison <span id="l-c">{{livraison.choix }}</span>) </span>
+                        </p>                        
+                        <div class="alert alert-warning recapT">
+                            <p>Montant total de votre commande: <strong class="recap"><span id="prixT">{{ total + livraison.prix }}</span> AR</strong></p>
+                        </div>
+                        <div class="w-100 d-flex">
+                            <a class="w-50 pt-3 mx-1 btn btn-secondary" href="{{ path('eco_panier') }}">Retourner dans votre PANIER</a>
+                            <a class="w-50 mx-1 btn btn-warning" id="next" href="{{ path('eco_panier_commande', {'id' : livraison.id }) }}">Valider votre achat et passer aux COMMANDES</a>  
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <script>
+            var xml = new XMLHttpRequest
+            var livraison = document.querySelector('#livr')
+            livraison.addEventListener('change', function(e){
+                var li = livraison.value
+                var lien = "{{ path('eco_ajax_livraison', {'id': 'id'}) }}"
+                var lien = lien.replace(/\/id/, "/"+li)
+                var link =  "{{ path('eco_panier_commande', {'id': 'id'}) }}"
+                var link = link.replace(/\/id/, "/"+li)
+                document.querySelector('#next').href = link
+                xml.onreadystatechange = function (){
+                    if(xml.readyState === 4){
+                        var resultat = JSON.parse(xml.responseText)
+                        var payer = document.querySelector('#prixT')
+                        payer.innerHTML = {{total}} + resultat.prix
+                        var prix = document.querySelectorAll('#l-p')
+                        for(var i = 0; i < prix.length; i++){
+                            prix[i].innerHTML = resultat.prix
+                        }
+                        var choix = document.querySelectorAll('#l-c')
+                        for(var j = 0; j < choix.length; j++){
+                            choix[j].innerHTML = resultat.choix
+                        }
+                    }
+                }
+                xml.open('GET', lien, true)
+                xml.send()
+
+            })
+            
+            
+        </script>
+    {% if not app.user %}
+        <div class="mt-5 p-2 text-muted border">
+            <p class="blockquote"><strong>NOTE:</strong> 
+                Si vous êtes un client vous auriez des reductions speciaux.
+                Veulliez <a href="{{ path('eco_inscription') }}">vous-inscrire</a> pour en profiter!
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

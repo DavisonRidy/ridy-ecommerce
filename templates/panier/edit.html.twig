@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Modifier command" %}
+
+{% block body %}
+<div class="container">
+    <h1>Command de {{produit.nom}}!</h1>
+    <div class="row text-muted">
+        <div class="p-3 col-md-9 border mx-auto bg-light">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{ vich_uploader_asset(produit)| imagine_filter('image_edit') }}" alt="photo du produit">
+                </div>
+                <div class="col-md-8">
+                    <div>
+                        <a class="float-right" href="{{ path('eco_panier') }}">garder le commmand</a>
+                        <div class="form-group row">
+                            <label class="col-md-5" for="nb">Quantité</label>
+                            <div class="col-md-5">
+                                <input class="form-control" type="number" id="nb" value="{{ n }}" onchange="changeN();">
+                            </div>
+                        </div>
+                        <script>
+                            function changeN(){
+                                var n = document.getElementById("nb").value;
+                                var lien = "{{ path('eco_panier_add', {'id': produit.id , 'n':0}) }}";
+                                document.getElementById("maj").href=lien.replace(/\/0/, "/"+n);
+                            }
+                        </script>
+                        <hr>
+                        <span class="text-info prix">{{ produit.prix }} AR</span>
+                        <p>au lieu de <strong><del>{{ produit.prixIntitial }} AR</del></strong> <span class="p-1 border-white bg-success rounded text-white">{{ (produit.prix - produit.prixIntitial) *100/ produit.prixIntitial }}%</span></p>
+                        <a class="btn btn-success float-right" id="maj" >Mettre à jour le command</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~" Liste des commandes" %}
+{% block body %}
+<style>
+    .commande-desc{
+        display: none;
+    }
+    .commande-desc.active{
+        display: block;
+    }
+    h4{
+        text-align: center;
+    }
+</style>
+<h1>La commande de {{ commande.nom }}</h1>
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="tab">
+            <button type="button" class="btn btn-light active" data-toggle="tooltip" href="#client">
+                Client
+            </button>
+            <button type="button" class="btn btn-light" data-toggle="tooltip" href="#commande">
+                Produits
+            </button>
+            <div class="p-3 border bg-light">
+                <div id="client" class="commande-desc active">
+                    <h4 class="text-muted">Information presonnel du client</h4>
+                    <p><strong>Nom: </strong> <span class="float-right">{{commande.nom | capitalize}}</span></p>
+                    <p><strong>Prenom: </strong> <span class="float-right">{{commande.prenom | capitalize}}</span></p>
+                    <p><strong>Email: </strong> <span class="float-right">{{commande.email}}</span></p>
+                    <p><strong>Address: </strong> <span class="float-right">{{commande.address}}</span></p>
+                    <p><strong>Mode de livraison: </strong> <span class="float-right">{{commande.livraison.choix}} ({{commande.livraison.prix}})</span></p>
+                </div>
+                <div id="commande" class="commande-desc">
+                    <h4 class="text-muted">Les produits commandés</h4>
+                    <table class="table table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produit in produits %}
+                                <tr>
+                                    <td>{{ produit.nom }}</td>
+                                    <td>{{ produit.prix }}</td>
+                                    <td>{{ commande.produitQnt[produit.id] }}</td>
+                                    <td>
+                                        {{produit.prix * commande.produitQnt[produit.id]}}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <td colspan ="3"><strong>Net A Payer (livraison inclus)</strong></td>
+                            <td><strong class="text-danger">{{commande.totalApayer + commande.livraison.prix}}</strong></td>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var btn = document.querySelectorAll('.tab button')
+    for(var i = 0; i < btn.length; i++){
+        btn[i].addEventListener('click', function(){
+            var div = this.parentNode
+            div.querySelector('.active').classList.remove('active')
+            this.classList.add('active')
+            var sible = div.querySelector(this.getAttribute('href'))
+            div.querySelector('.commande-desc.active').classList.remove('active')
+            sible.classList.add('active')
+        })
+    }
+</script>
+    
+{% endblock %}

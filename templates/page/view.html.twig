@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title parent()~"Un Produit" %}
+
+
+{% block body %}
+    <h1>
+    {% if produit.type.id == 1 %}
+        Les Ordinateurs Portable
+    {% elseif produit.type.id == 2 %}
+        Les Smartphones
+    {% elseif produit.type.id == 3 %}
+        Les Tablettes
+    {% else %}
+        Les Accessoires
+    {% endif %}
+    </h1>
+    <section>
+        <div class="conteneur m-2">
+            <div class="container">
+                <div class="card overflow-hidden bg-light">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="m-3 image">
+                                <img class="rounded img-thumbnail" src="{{ vich_uploader_asset(produit)| imagine_filter('image_view') }}" alt="Image du {{produit.nom}}">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="my-5 p3 aPropos">
+                                <div class="description">
+                                    <div>
+                                        <strong>Date: </strong><span>{{ produit.creation | date('d/m/Y') }}</span>
+                                    </div>
+                                    <div class="my-4 descr">
+                                        <strong>Description du produit: </strong>
+                                        <p class="text-justify">{{ produit.description }}</p>
+                                    </div>
+                                    <div class="listMenu d-flex">
+                                        <p class="w-50 h3 text-info prix">{{ produit.prix }} AR <del class="h4 text-muted">{{ produit.prixInitial }} AR</del></p>
+                                        <div class="bouton w-50">
+                                            {% if app.user and app.user.roles[0] == rl %}
+                                                <a class="btn btn-primary  btn-lg" href="{{ path('eco_edit', {'id': produit.id}) }}">modif</a>
+                                                <a class="btn btn-danger  btn-lg" 
+                                                    href="remove/produit" 
+                                                    onclick= "event.preventDefault(); confirm('Sûre?!') && document.getElementById('b-oui').submit();">
+                                                        suppr
+                                                </a>
+                                                <form id="b-oui" style="display: none;" action="{{ path('eco_produit_del', {'id': produit.id}) }}" method="post">
+                                                    <input type="hidden" name="_method" value="Delete">
+                                                    <input type="hidden" name="token" value="{{ csrf_token('suppr-valide') }}">
+                                                </form>
+                                            {% else %}                  
+                                                <a class="btn btn-primary  btn-lg" href="{{ path('eco_produit') }}">Retour</a>
+                                                <a class="btn btn-success btn-lg" 
+                                                    href="#" 
+                                                    onclick="event.preventDefault(); getN();">
+                                                        Ajouter
+                                                </a>
+                                                <script>
+                                                    function getN(){
+                                                        var n = prompt('combien vous-en-voulez?');
+                                                        if({{produit.stock}} < n){
+                                                            alert('la quatitée est invalide!');
+                                                        }
+                                                        else if(isNaN(n) || n < 1){
+                                                            alert('la valeur attendu est un nombre valide!');
+                                                        }else{
+                                                            var tag = "{{ path('eco_panier_add', {'id': produit.id, 'n': 0 }) }}"
+                                                            document.getElementById("add.n").href=tag.replace(/\/0/, "/"+n);
+                                                            confirm('Sûre?!') && document.getElementById('add.n').click();
+                                                        }
+                                                    }                                                  
+                                                </script>
+                                                <a id="add.n" style="display: none;">add</a>
+                                            {% endif %} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 bg-info">
+                            <div class="my-2 list">
+                                <h4 class="my-3 text-center">Détail</h4>
+                                <ul class="list-group  list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-info">
+                                        Remise
+                                        <span class="badge badge-primary badge-pill">{{ ((produit.prixInitial-produit.prix)*100/produit.prixInitial) | round() }}%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-info">
+                                        Stock dispo
+                                        <span class="badge badge-primary badge-pill">{{ produit.stock }}</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-info">
+                                        Type
+                                        <span class="badge badge-pill">{{ produit.type.genre }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="proList mt-5">
+                <h3>Tous le produits</h3>
+                <hr>
+                <div class="bg-light mb-5">
+                    <div class="row mx-0">
+                    {% for produit in produits %}
+                        <div class="p-0 m-1 border rounded text-center pro" style="width: 19rem">
+                            <span class="border-dark bg-primary new">new</span>
+                            <img src="{{ vich_uploader_asset(produit) }}" class="w-100" alt="Image du {{produit.nom}}">
+                            <h4 class="my-3">{{ produit.nom |capitalize }}</h4>
+                            <p class="my-4"><span class="text-info prix">{{ produit.prix }} AR</span></p>
+                            <a class="btn btn-primary" href="{{ path('eco_produit_view', {'type': produit.type.id, 'id': produit.id}) }}">Voir en détail</a>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="w-100">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if pg == 1 %}disabled{% endif %}">
+                                <a class="page-link" href="{{path('eco_produit_view', {'type': produit.type.id, 'id':produit.id, 'pg': pg - 1})}}">
+                                    Pré...
+                                </a>
+                            </li>        
+                            {% for i in 1 .. pgs %}
+                                <li class="page-item {% if pg == i %}active{% endif %}"><a class="page-link"
+                                    href="{{path('eco_produit_view', {'type': produit.type.id, 'id':produit.id, 'pg': i})}}">
+                                        {{i}}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item {% if pg == pgs %}disabled{% endif %}">
+                                <a class="page-link" href="{{path('eco_produit_view', {'type': produit.type.id, 'id':produit.id, 'pg': pg + 1})}}">
+                                    Sui...
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+      
+{% endblock %}
