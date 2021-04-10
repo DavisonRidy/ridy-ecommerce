@@ -13,21 +13,4 @@
         <p>Sapiente assumenda soluta eaque ipsa animi. Hic soluta rem cum nulla repudiandae unde placeat iste!</p>
     </div>
 </div>
-<section>
-    <div class="listUser">
-        <div class="container text-center">
-            <h3>Les membres de l'équipe</h3>
-            <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ea quas soluta odio aperiam, provident natus cupiditate eaque veritatis necessitatibus, unde expedita illum pariatur minus illo maiores nisi laboriosam at recusandae fuga tenetur odit? Ut praesentium iure quam similique, voluptate hic nemo debitis harum ipsam cum quidem doloremque, error esse.</p> 
-            <div class="m-3 row">
-                {% for user in users %}
-                <div class="col-md-4">
-                    <img src="" alt="photo de nom">
-                    <h4>nom du membre</h4>
-                    <p>{{user.roles[0]}}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}

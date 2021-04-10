@@ -21,8 +21,7 @@ class PageController extends AbstractController
      */
     public function home(UserRepository $repo): Response
     {
-        $users = $repo->findAll();
-        return $this->render('page/index.html.twig', compact('users'));
+        return $this->render('page/index.html.twig');
     }
 
     /**
